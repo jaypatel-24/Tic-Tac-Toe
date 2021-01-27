@@ -53,6 +53,8 @@ function markThePosition(){
     player++;
 
     document.getElementById(this.id).value = symbol;
+    document.getElementById(this.id).disabled = true;
+
     const value = (this.id).substring(6,7);
     
     for(let i=0;i<grp.length;i++) {
@@ -66,21 +68,32 @@ function markThePosition(){
 }
 
 function checkGameStatus() {
+    let wonflag =0;
     for(let i=0;i<grp.length;i++) {
         if(grp[i][0] == grp[i][1] && grp[i][1] == grp[i][2]) {
-            if(grp[i][0] == 'X')
+            if(grp[i][0] == 'X'){
             document.getElementById('result').innerHTML = 'Player 1 Won';
-            else if(grp[i][0] == 'O')
+            wonflag=1;
+            }
+            else if(grp[i][0] == 'O'){
             document.getElementById('result').innerHTML = 'Player 2 Won';
+            wonflag=1;
+            }
 
             disableButtons();
         } 
     }
-    if(turn == 9){
-        document.getElementById('result').innerHTML = 'Tie';
-        disableButtons();
-    }
+    if(wonflag ==0 ){
+        if(turn % 2 ==0)
+            document.getElementById('result').innerHTML = `Player X turn`;
+        else if(turn % 2 == 1 && turn != 9)
+            document.getElementById('result').innerHTML = `Player O turn`;
 
+        if(turn == 9){
+            document.getElementById('result').innerHTML = 'Tie';
+            disableButtons();
+        }    
+    }
 }
 
 function restartGame() {
@@ -101,7 +114,7 @@ function restartGame() {
     document.getElementById("button8").value = "";
     document.getElementById("button9").value = "";
 
-    document.getElementById('result').innerHTML = 'Match Result: ';
+    document.getElementById('result').innerHTML = 'Player X turn ';
 
 }
 
